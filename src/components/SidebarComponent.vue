@@ -14,10 +14,10 @@
           </div>
           <nav class="mb-3">
             <b-nav vertical>
-              <b-nav-item to="/inicio" active @click="hide"><b-icon icon="house-door" variant="light" font-scale="1.5" ></b-icon> INICIO</b-nav-item>
-              <b-nav-item to="/tickets"  @click="hide"><b-icon icon="receipt-cutoff" variant="light" font-scale="1.5" ></b-icon> TICKETS</b-nav-item>
-              <b-nav-item to="/perfil"  @click="hide"><b-icon icon="person" variant="light" font-scale="1.5" ></b-icon> MI PERFIL</b-nav-item>
-              <b-nav-item   @click="hide"><b-icon icon="door-closed" variant="light" font-scale="1.5" ></b-icon> CERRAR SESIÓN</b-nav-item>
+              <b-nav-item to="/inicio" title="inicio" active @click="hide"><b-icon icon="house-door" variant="light" font-scale="1.5" ></b-icon> INICIO</b-nav-item>
+              <b-nav-item to="/tickets" title="tickets"  @click="hide"><b-icon icon="receipt-cutoff" variant="light" font-scale="1.5" ></b-icon> TICKETS</b-nav-item>
+              <b-nav-item to="/perfil" title="perfil" @click="hide"><b-icon icon="person" variant="light" font-scale="1.5" ></b-icon> MI PERFIL</b-nav-item>
+              <b-nav-item to="/" title="cerrar sesión" @click="hide"><b-icon icon="door-closed" variant="light" font-scale="1.5" ></b-icon> CERRAR SESIÓN</b-nav-item>
              
             </b-nav>
           </nav>

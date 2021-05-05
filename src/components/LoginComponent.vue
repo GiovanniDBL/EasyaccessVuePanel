@@ -1,6 +1,10 @@
 <template>
-    <div class="container">
-      
+    <div >
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
+      <div class="container-fluid">
+    <a class="navbar-brand titulo-Navv"  ><span>Panel de control </span>easy<span>access</span></a>
+    </div>
+</nav>
 <form v-on:submit.prevent="login">
  <div class="animated fadeIn top ">
     <div class="modal-dialog shadow">
@@ -25,6 +29,10 @@
         <div class="modal-footer d-flex justify-content-center">
             <button type="submit" class="btn btn-block  btn-color  btn-round">INGRESAR</button>
         </div>
+
+        <div class="alert alert-danger" role="alert" v-if="error">
+             rror_msg}}
+       </div>
         </div>
     </div>
     </div> 
@@ -44,6 +52,10 @@
 </template>
 
 <script>
+
+let LoginUrl = 'http://localhost:3000/user/loginpanel';
+import axios from 'axios';
+
 export default {
     name: 'LoginComponent',
     data: function(){
@@ -56,10 +68,25 @@ export default {
     },
     methods:{
         login(){
-            console.log('Usuario:', this.nombre);
-            console.log('Contraseña',this.pass);
+           let json = {
+              "nombre": this.nombre,
+              "pass": this.pass
+           };
+          axios.post(LoginUrl, json).then(data =>{
+              console.log(data);
+              if (data.status == 200) {
+                 localStorage.token = data.data.token;
+                 this.$router.push('inicio');
+              }else{
+                  this.error = true;
+                  this.error_msg = data.data.message;
+              }
+          
+          })
+
         }
-    }
+    },
+ 
 }
 </script>
 
@@ -67,6 +94,23 @@ export default {
 
 .shadow{
     box-shadow: 2px 2px 20px 1px rgba(0, 0, 0, 0.555)!important;
+}
+@media(min-width: 768px) {
+  .titulo-Navv{
+    /* font-size: 1.2rem !important; */
+ letter-spacing: 3px;
+ text-transform: uppercase;
+ color: #33a3fb !important;
+ font-weight: 800;
+
+
+}
+.titulo-Navv span{
+  /* font-size: unset; */
+ letter-spacing: 3px;
+ text-transform: uppercase;
+ color: white !important;
+}
 }
 </style>>
 

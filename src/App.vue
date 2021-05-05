@@ -1,21 +1,25 @@
 <template>
   <div id="app">
- <sidebar></sidebar>
-   <navbar></navbar>
+ <!-- <sidebar></sidebar>
+   <navbar></navbar> -->
+    
+
+
+
    <router-view></router-view>
   </div>
 </template>
 
 <script>
- import navbar from './components/NavbarComponent.vue';
- import sidebar from './components/SidebarComponent.vue';
+//  import navbar from './components/NavbarComponent.vue';
+//  import sidebar from './components/SidebarComponent.vue';
 
 export default {
   name: 'App',
-  components:{
-    navbar,
-    sidebar
-  }
+  // components:{
+  //   navbar,
+  //   sidebar
+  // }
 }
 </script>
 
@@ -34,4 +38,5 @@ h1{
 ::-webkit-scrollbar {
     display: none;
 }
+
 </style>

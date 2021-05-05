@@ -1,4 +1,8 @@
 <template>
+<div>
+  <sidebar></sidebar>
+   <navbar></navbar>
+
     <div class="container animated fadeIn">
         <h1 class="titulo-tickets">Tabla de tickets</h1>
         
@@ -75,6 +79,7 @@
 </div>
 
     </div>
+    </div>
 </template>
 
 
@@ -91,6 +96,8 @@ let urldelete = 'http://localhost:3000/tickets/deleteReports/'
 import axios from 'axios'
 import Swal from 'sweetalert2';
 import moment from 'moment'
+import navbar from './NavbarComponent';
+ import sidebar from './SidebarComponent.vue';
 
 
 
@@ -99,6 +106,10 @@ import moment from 'moment'
 export default {
   
     name: 'TicketsComponent',
+     components:{
+    navbar,
+    sidebar
+  },
  
     data(){
         return{

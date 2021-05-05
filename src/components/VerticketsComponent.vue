@@ -1,5 +1,10 @@
 <template >
+<div>
+ <sidebar></sidebar>
+   <navbar></navbar>
+
     <div class="container">
+     
         <!-- //**** TITULO ********-->
 
 
@@ -104,6 +109,7 @@
 
 
     </div>
+    </div>
 </template>
 
 
@@ -111,11 +117,17 @@
 //* SCRIPTS DEL COMPONENTE
 
 <script>
+import navbar from './NavbarComponent';
+ import sidebar from './SidebarComponent.vue';
 let urlverTickets = 'http://localhost:3000/tickets/verTickets/'
 import axios from 'axios'
 import moment from 'moment'
 export default {
     name: 'VerticketsComponent',
+    components:{
+    navbar,
+    sidebar
+  },
     data:function(){
       return{
         tickedID: null,

@@ -3,7 +3,7 @@
 
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
   <div class="container-fluid">
-    <b-navbar-brand href="#"><b-button variant="dark" v-b-toggle.sidebar-menu><b-icon icon="list"></b-icon></b-button></b-navbar-brand>
+    <b-navbar-brand href="#"><b-button variant="dark" v-b-toggle.sidebar-menu ><b-icon icon="list"></b-icon></b-button></b-navbar-brand>
     <a class="navbar-brand titulo-Nav"  href="#"><span>Panel de control </span>easy<span>access</span></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -11,7 +11,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" to="/" href="">ACCEDER</a>
+          <a class="nav-link active" aria-current="page" title="usuario" >Bienvenido: Usuario</a>
         </li>
         
       </ul>
@@ -38,8 +38,8 @@
         
         
           <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="floatingnombre" placeholder="name@example.com" required >
-            <label for="floatingnombre"  class="label-login text-muted">Nombre</label>
+            <input type="text" class="form-control" id="floatingname" placeholder="name@example.com" required >
+            <label for="floatingname"  class="label-login text-muted">Nombre</label>
           </div>
           <div class="form-floating mb-3">
             <input type="password" class="form-control"  id="floatingcontraseña" placeholder="name@example.com" required >
@@ -64,17 +64,7 @@ export default {
 </script>
 
 <style>
-.titulo-Nav{
-  font-size: 15.8px !important;
- text-transform: uppercase;
- color: #33a3fb !important;
- font-weight: 800;
-}
-.titulo-Nav span{
-font-size: 15.8px;
- text-transform: uppercase;
- color: white !important;
-}
+
 @media(min-width: 768px) {
   .titulo-Nav{
     /* font-size: 1.2rem !important; */
