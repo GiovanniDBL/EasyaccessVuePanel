@@ -10,8 +10,8 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" title="usuario" >Bienvenido: Usuario</a>
+        <li class="nav-item ">
+          <a class="nav-link active navbar-nombre" aria-current="page" title="usuario"  >Bienvenido | <span>{{nombre}}</span> </a>
         </li>
         
       </ul>
@@ -60,6 +60,18 @@
 <script>
 export default {
     name: 'NavbarComponent',
+    data(){
+      return{
+        nombre: ''
+      }
+    },
+    mounted(){
+      if (localStorage.getItem('token')) {
+          this.nombre = localStorage.getItem('nombre');
+      } else {
+          this.$router.push("/");
+      }
+    }
 }
 </script>
 
@@ -72,7 +84,7 @@ export default {
  text-transform: uppercase;
  color: #33a3fb !important;
  font-weight: 800;
- line-height: 1px;
+ /* line-height: 1px; */
 
 }
 .titulo-Nav span{
@@ -82,6 +94,18 @@ export default {
  color: white !important;
 }
 }
+.navbar-nombre{
+letter-spacing: 1px;
+ text-transform: uppercase;
+ color: #33a3fb !important;
+ font-weight: 800;
+ /* line-height: 1px; */
+}
+.navbar-nombre span{
+ letter-spacing: 1px; 
+ text-transform: uppercase;
+ color: white !important;
+}
 .titulo-login{
   color: #34495e;
   text-transform: uppercase;
@@ -89,10 +113,7 @@ export default {
   /* letter-spacing: 1.5px; */
   
 }
-.btn-color{
-  background-color: #3498db !important;
-  color: #ffffff !important;
-}
+
 .modal-header{
 
     background: #f2f2f2;
@@ -100,14 +121,8 @@ export default {
 .modal-footer{
   background: #f2f2f2;
 }
-.btn-round {
-  border-radius: 3rem !important;
-}
-.logo-login{
-  width: 50px;
-  border-radius: 50%;
 
-}
+
 .sesion{
   font-weight: bold;
   text-align: center;
@@ -118,4 +133,5 @@ export default {
 .modal{
   background-color: #000000d7   !important;
 }
+
 </style>

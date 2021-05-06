@@ -56,10 +56,10 @@
    <!-- //**** CARD CONTENEDOR DE NOTAS DE TICKET ********-->
     <b-col class="columna-notas">
         <div class="card text-center " >
-  <div class="card-header"> NOTAS <i class="fas fa-plus-circle plus" data-toggle="modal" data-target="#exampleModalVer"></i></div>
+  <div class="card-header"> NOTAS <i class="fas fa-plus-circle plus" data-bs-toggle="modal" data-bs-target="#exampleModalVer"></i></div>
   <div class="card-body">
    
-    <p class="card-text">Aún no se han creado notas para este ticket.</p>
+    <p class="card-text text-muted">Aún no se han creado notas para este ticket.</p>
     
   </div>
 </div>
@@ -109,6 +109,7 @@
 
 
     </div>
+
     </div>
 </template>
 
@@ -201,6 +202,10 @@ export default {
 }
 .plus{
    margin-left: 400px;
+}
+.plus:hover{
+  color:tomato;
+  transition: all .5s ease-in-out;
 }
 .top{
     margin-top: 5rem;

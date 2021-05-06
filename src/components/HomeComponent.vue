@@ -15,6 +15,14 @@ export default {
     components:{
     navbar,
     sidebar
+  },
+  
+  mounted(){
+      if (localStorage.getItem('token')) {
+          console.log('HOLA');
+      } else {
+          this.$router.push("/");
+      }
   }
 }
 </script>

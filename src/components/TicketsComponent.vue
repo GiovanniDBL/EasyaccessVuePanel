@@ -140,7 +140,11 @@ export default {
       },
    mounted() {
      
-      
+       if (localStorage.getItem('token')) {
+          console.log('HOLA');
+      } else {
+          this.$router.push("/");
+      }
     
    },
     methods:{

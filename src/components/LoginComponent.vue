@@ -30,9 +30,9 @@
             <button type="submit" class="btn btn-block  btn-color  btn-round">INGRESAR</button>
         </div>
 
-        <div class="alert alert-danger" role="alert" v-if="error">
-             rror_msg}}
-       </div>
+        <!-- <div class="alert alert-danger" role="alert" v-if="error">
+            {{error_msg}}
+       </div> -->
         </div>
     </div>
     </div> 
@@ -55,6 +55,8 @@
 
 let LoginUrl = 'http://localhost:3000/user/loginpanel';
 import axios from 'axios';
+import Swal from 'sweetalert2';
+
 
 export default {
     name: 'LoginComponent',
@@ -74,19 +76,57 @@ export default {
            };
           axios.post(LoginUrl, json).then(data =>{
               console.log(data);
+
               if (data.status == 200) {
-                 localStorage.token = data.data.token;
-                 this.$router.push('inicio');
-              }else{
-                  this.error = true;
-                  this.error_msg = data.data.message;
+ 
+                    Swal.fire({
+                    allowOutsideClick: false,
+                    icon: 'success',
+                    title: 'Usuario',
+                    text: this.error_msg = data.data.message,
+                    backdrop: `rgba(0,0,0,0.7)`,
+                    timer: 1500, 
+                    showConfirmButton: false,
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                    }
+
+                    }).then(() => {
+                        // localStorage.token = data.data.token;
+                        localStorage.setItem('token', data.data.token)
+                        localStorage.setItem('nombre', data.data.nombre)
+                        localStorage.setItem('rol', data.data.role)
+                                this.$router.push('inicio');
+                                });
+                             
+
+                    }else{
+                        this.error = true;
+                        this.error_msg = data.data.message;
+
+                    Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: this.error_msg = data.data.message,
+                    backdrop: `rgba(0,0,0,0.7)`,
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                    }
+
+                    });
               }
           
           })
 
         }
     },
- 
+
 }
 </script>
 
@@ -111,6 +151,23 @@ export default {
  text-transform: uppercase;
  color: white !important;
 }
+}
+
+.btn-color{
+  background-color: #3498db !important;
+  color: #ffffff !important;
+}
+.btn-color:hover{
+  background-color: #2a638a !important;
+  transition: all .4s ease-in-out;
+}
+.btn-round {
+  border-radius: 3rem !important;
+}
+.logo-login{
+  width: 50px;
+  border-radius: 50%;
+
 }
 </style>>
 
