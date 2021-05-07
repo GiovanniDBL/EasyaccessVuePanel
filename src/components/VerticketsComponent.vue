@@ -87,7 +87,7 @@
         <form>
           <div class="mb-3">
             <label for="recipient-name" class="col-form-label">De:</label>
-            <input type="text" class="form-control" id="recipient-name">
+            <input type="text" class="form-control" id="recipient-name" disabled v-model="this.nombre" v>
           </div>
           <div class="mb-3">
             <label for="message-text" class="col-form-label">Mensaje:</label>
@@ -96,9 +96,9 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
         <button type="button" class="btn btn-primary">Guardar Nota</button>
-        <button type="button" class="btn btn-dark">Ver todas las notas</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+        <!-- <button type="button" class="btn btn-dark">Ver todas las notas</button> -->
       </div>
     </div>
   </div>
@@ -143,7 +143,10 @@ export default {
                 asunto:'',
                 created:'',
                 email:'',
-            }
+            },
+                 // *ROLES
+            nombre: ''
+       
       }
     },
     methods:{
@@ -168,6 +171,13 @@ export default {
         this.ticket.email = datos.data[0].email;
         // console.log(this.ticket);
       })
+
+          // *ROLES
+       if (localStorage.getItem('token')) {
+          this.nombre = localStorage.getItem('nombre');
+      } else {
+          this.$router.push("/");
+      }
     }
 }
 </script>

@@ -36,7 +36,7 @@
       <th scope="col">Prioridad</th>
       <th scope="col">Asunto</th>
       <th scope="col">Fecha</th>
-      <th scope="col">Eliminar</th>
+      <th scope="col" v-if="rol !== 'usuario'">Eliminar</th>
       <th scope="col">Detalles</th>
   
   
@@ -51,7 +51,7 @@
       <td>{{ticket.prioridad}}</td>
       <td> {{ticket.asunto}}</td>
       <td>{{fecha(ticket.created)}}</td>
-      <td>
+      <td v-if="rol !== 'usuario'">
           <b-button variant="danger" @click="borrar(ticket.id_reporte)"><i class="fas fa-trash-alt"></i></b-button>
       </td>
       <td><b-button v-on:click="detalles(ticket.id_reporte)" variant="success"><i class="fas fa-file-import "></i></b-button></td>
@@ -113,21 +113,16 @@ export default {
  
     data(){
         return{
+
           search: '',
          elementosPorPagina: 10,
              datosPaginados:[],
              paginaActual: 1,
+             tickets: [],
 
-            tickets: [],
-            // ticket:{
-            //     id_reporte:null,
-            //     cuenta:'',
-            //     departamento:'',
-            //     prioridad:'',
-            //     reporte:'',
-            //     multimedia:'',
-            //     asunto:'',
-            // },
+            //  *Manejo de Roles
+            rol: ''
+          
             
           
             
@@ -141,7 +136,7 @@ export default {
    mounted() {
      
        if (localStorage.getItem('token')) {
-          console.log('HOLA');
+          this.rol = localStorage.getItem('rol');
       } else {
           this.$router.push("/");
       }
