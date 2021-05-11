@@ -150,6 +150,7 @@ export default {
       //* LLAMAR DATOS DE TABLA A CADA PAGINA DE LA PAGINACIÓN
       getDataPagina(noPagina){
          axios.get(url).then(response=>{
+        
               this.tickets=response.data;
               this.paginaActual = noPagina;
         this.datosPaginados = [];

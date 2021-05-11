@@ -59,7 +59,7 @@
   <div class="card-header"> NOTAS <i class="fas fa-plus-circle plus" data-bs-toggle="modal" data-bs-target="#exampleModalVer"></i></div>
   <div class="card-body">
    
-    <p class="card-text text-muted">Aún no se han creado notas para este ticket.</p>
+    <p class="card-text text-muted">{{nota.nombre}}</p>
     
   </div>
 </div>
@@ -121,6 +121,7 @@
 import navbar from './NavbarComponent';
  import sidebar from './SidebarComponent.vue';
 let urlverTickets = 'http://localhost:3000/tickets/verTickets/'
+let urlverNotas  = 'http://localhost:3000/notas/TraerNotas/'
 import axios from 'axios'
 import moment from 'moment'
 export default {
@@ -145,7 +146,8 @@ export default {
                 email:'',
             },
                  // *ROLES
-            nombre: ''
+            nombre: '',
+            nota:[]
        
       }
     },
@@ -156,6 +158,8 @@ export default {
     },
     },
     mounted:function(){
+
+      // *TRAER DETALLES DE LOS TICKETS
       this.tickedID = this.$route.params.id;
       console.log(this.tickedID);
       axios.get(urlverTickets + this.tickedID).then(datos =>{
@@ -170,6 +174,12 @@ export default {
         this.ticket.reporte = datos.data[0].reporte;
         this.ticket.email = datos.data[0].email;
         // console.log(this.ticket);
+      });
+      // *TRAER LAS NOTAS CON ID DE REPORTES
+      axios.get(urlverNotas + this.tickedID).then(response =>{
+
+        console.log(response);
+        this.nota = response.data;
       })
 
           // *ROLES
