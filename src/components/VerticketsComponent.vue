@@ -59,7 +59,26 @@
   <div class="card-header"> NOTAS <i class="fas fa-plus-circle plus" data-bs-toggle="modal" data-bs-target="#exampleModalVer"></i></div>
   <div class="card-body">
    
-    <p class="card-text text-muted">{{nota.nombre}}</p>
+    <!-- <p class="card-text text-muted" v-for="nota in notas" :key="nota.id_nota" >{{nota.nota}}</p> -->
+    <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Asignado</th>
+      <th scope="col">Nota</th>
+      <th scope="col">Fecha</th>
+    </tr>
+  </thead>
+  <tbody class="tbody-texto">
+    <tr  v-for="nota in notas" :key="nota.id_nota">
+      <th scope="row">{{nota.id_nota}}</th>
+      <td>{{nota.nombre}}</td>
+      <td>{{nota.nota}}</td>
+      <td>{{fecha(nota.fecha_nota)}}</td>
+    </tr>
+  
+  </tbody>
+</table>
     
   </div>
 </div>
@@ -84,25 +103,34 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form>
+        <form @submit="crear()" method="POST">
+       
+          <div class="mb-3">
+    
+            <label for="id" class="col-form-label">ID Reporte</label>
+            <input type="text" class="form-control" id="id" name="id_reporte" disabled v-model="crearnota.id_reporte" >
+          </div>
           <div class="mb-3">
             <label for="recipient-name" class="col-form-label">De:</label>
-            <input type="text" class="form-control" id="recipient-name" disabled v-model="this.nombre" v>
+            <input type="text" class="form-control" id="recipient-name" name="nombre" disabled  v-model="crearnota.nombre" >
           </div>
           <div class="mb-3">
             <label for="message-text" class="col-form-label">Mensaje:</label>
-            <textarea class="form-control" id="message-text"></textarea>
+            <textarea class="form-control" name="nota" id="message-text" v-model="crearnota.nota"></textarea>
           </div>
+        
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Guardar Nota</button>
+        <button @click="crear()" type="submit" class="btn btn-primary">Guardar Nota</button>
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
         <!-- <button type="button" class="btn btn-dark">Ver todas las notas</button> -->
       </div>
     </div>
   </div>
 </div>
+
+
 
 
 
@@ -122,6 +150,7 @@ import navbar from './NavbarComponent';
  import sidebar from './SidebarComponent.vue';
 let urlverTickets = 'http://localhost:3000/tickets/verTickets/'
 let urlverNotas  = 'http://localhost:3000/notas/TraerNotas/'
+let urlcrearNotas = 'http://localhost:3000/notas/CrearNota'
 import axios from 'axios'
 import moment from 'moment'
 export default {
@@ -144,10 +173,20 @@ export default {
                 asunto:'',
                 created:'',
                 email:'',
+               
+                
+            },
+            notas:[],
+            crearnota:{
+              nombre:'',
+              id_reporte: '',
+              nota:'',  
             },
                  // *ROLES
             nombre: '',
-            nota:[]
+            
+            
+            
        
       }
     },
@@ -156,8 +195,31 @@ export default {
       fecha(fecha_origen){
       return moment(fecha_origen).locale('es').format('LL');
     },
+     mostrar(){
+        // *TRAER LAS NOTAS CON ID DE REPORTES
+      axios.get(urlverNotas + this.tickedID).then(response =>{
+
+        console.log(response); 
+        this.notas = response.data;
+      });
+      },
+      // *CREAR NOTAS
+     crear(){
+       let parametros ={nombre: this.crearnota.nombre, id_reporte: this.crearnota.id_reporte, nota: this.crearnota.nota}
+      axios.post(urlcrearNotas, parametros).then(result =>{
+      this.mostrar();
+      console.log(result);
+      
+      });
+    
+      },
+     
     },
     mounted:function(){
+      // *DATOS CREARNOTA
+this.crearnota.id_reporte = this.$route.params.id;
+this.crearnota.nombre = localStorage.getItem('nombre');
+
 
       // *TRAER DETALLES DE LOS TICKETS
       this.tickedID = this.$route.params.id;
@@ -175,12 +237,10 @@ export default {
         this.ticket.email = datos.data[0].email;
         // console.log(this.ticket);
       });
-      // *TRAER LAS NOTAS CON ID DE REPORTES
-      axios.get(urlverNotas + this.tickedID).then(response =>{
+      
+this.mostrar();
 
-        console.log(response);
-        this.nota = response.data;
-      })
+     
 
           // *ROLES
        if (localStorage.getItem('token')) {
@@ -188,7 +248,8 @@ export default {
       } else {
           this.$router.push("/");
       }
-    }
+    },
+   
 }
 </script>
 
@@ -234,6 +295,10 @@ export default {
   text-decoration: none;
   color: #33a3fb;
   
+
+}
+.tbody-texto{
+  text-transform: lowercase;
 
 }
 
