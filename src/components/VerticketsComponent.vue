@@ -8,14 +8,29 @@
         <!-- //**** TITULO ********-->
 
 
-<h2 class="titulo-verticket animated fadeIn"> <b-link to="/tickets" class="fas fa-arrow-circle-left boton-regresar"> </b-link> Detalles del Ticket</h2>
+<!-- <h2 class="titulo-verticket animated fadeIn"> <b-link to="/tickets" class="fas fa-arrow-circle-left boton-regresar"></b-link> Detalles del Ticket</h2> -->
+<div class="container">
+  <div class="row">
+    <div class="col titulo-verticket">
+       <h1><b-link to="/tickets" class="far fa-arrow-alt-circle-left boton-regresar"></b-link></h1>
+    </div>
+    <div class="col titulo-verticket">
+     <h1>Detalles del ticket</h1>
+    </div>
+    <div class="col">
+     
+    </div>
+  
+  </div>
+</div>
+<hr>
 
 
 <b-container class="bv-example-row top animated fadeIn">
   <b-row>
        <!-- //**** CARD CONTENEDOR DE INFORMACIÓN DE TICKET ********-->
-    <b-col class="columna-ticket">
-    <div class="card" >
+    <b-col class="columna-ticket" cols="4">
+    <div class="card card-border" >
     <div class="card-header "><i class="fas fa-info-circle"></i> DATOS DEL TICKET</div>
     <div class="card-body">
  
@@ -54,27 +69,33 @@
 
 
    <!-- //**** CARD CONTENEDOR DE NOTAS DE TICKET ********-->
-    <b-col class="columna-notas">
-        <div class="card text-center " >
-  <div class="card-header"> NOTAS <i class="fas fa-plus-circle plus" data-bs-toggle="modal" data-bs-target="#exampleModalVer"></i></div>
+    <b-col class="columna-notas" cols="8">
+        <div class="card text-center card-border " >
+  <div class="card-header"> NOTAS <i class="fas fa-plus-circle plus " v-if="rol !== 'usuario'" data-bs-toggle="modal" data-bs-target="#exampleModalVer"></i></div>
   <div class="card-body">
    
     <!-- <p class="card-text text-muted" v-for="nota in notas" :key="nota.id_nota" >{{nota.nota}}</p> -->
-    <table class="table">
+    <table  class="table  table-striped">
   <thead>
     <tr>
       <th scope="col">ID</th>
       <th scope="col">Asignado</th>
       <th scope="col">Nota</th>
       <th scope="col">Fecha</th>
+      <th scope="col" v-if="rol !== 'usuario'">Eliminar</th>
     </tr>
   </thead>
   <tbody class="tbody-texto">
-    <tr  v-for="nota in notas" :key="nota.id_nota">
+    <tr v-for="nota in notas" :key="nota.id_nota">
       <th scope="row">{{nota.id_nota}}</th>
       <td>{{nota.nombre}}</td>
-      <td>{{nota.nota}}</td>
+      <td>
+        <textarea name="" id="" cols="20" class="text-area-nota"  disabled rows="2" v-model="nota.nota"></textarea>
+      </td>
       <td>{{fecha(nota.fecha_nota)}}</td>
+      <td v-if="rol !== 'usuario'">
+          <b-button variant="danger" @click="borrar(nota.id_nota)"><i class="fas fa-trash-alt"></i></b-button>
+      </td>
     </tr>
   
   </tbody>
@@ -122,7 +143,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button @click="crear()" type="submit" class="btn btn-primary">Guardar Nota</button>
+        <button @click="crear()" type="submit" data-bs-dismiss="modal" class="btn btn-primary">Guardar Nota</button>
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
         <!-- <button type="button" class="btn btn-dark">Ver todas las notas</button> -->
       </div>
@@ -151,8 +172,10 @@ import navbar from './NavbarComponent';
 let urlverTickets = 'http://localhost:3000/tickets/verTickets/'
 let urlverNotas  = 'http://localhost:3000/notas/TraerNotas/'
 let urlcrearNotas = 'http://localhost:3000/notas/CrearNota'
+let urldeleteNotas = 'http://localhost:3000/notas/EliminarNota/'
 import axios from 'axios'
 import moment from 'moment'
+import Swal from 'sweetalert2';
 export default {
     name: 'VerticketsComponent',
     components:{
@@ -184,6 +207,7 @@ export default {
             },
                  // *ROLES
             nombre: '',
+            rol: ''
             
             
             
@@ -203,16 +227,62 @@ export default {
         this.notas = response.data;
       });
       },
+      
       // *CREAR NOTAS
      crear(){
        let parametros ={nombre: this.crearnota.nombre, id_reporte: this.crearnota.id_reporte, nota: this.crearnota.nota}
       axios.post(urlcrearNotas, parametros).then(result =>{
-      this.mostrar();
-      console.log(result);
+        
+     Swal.fire({
+                    allowOutsideClick: false,
+                    icon: 'success',
+                    title: 'Nota',
+                    text: 'Nota creada correctamente',
+                    backdrop: `rgba(0,0,0,0.7)`,
+                    timer: 1500, 
+                    showConfirmButton: false,
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                    }
+
+                    }).then(() => {
+                        this.mostrar();
+                        console.log(result);
+                                // this.$router.push('vertickets');
+                                });
       
       });
     
       },
+       // *ELIMINAR NOTAS 
+       borrar(id_nota){
+          Swal.fire({
+            allowOutsideClick: false,
+            icon: 'info',
+            title: '¿Deseas eliminar este elemento?',
+            confirmButtonText: 'Confirmar',
+            cancelButtonText: 'Cancelar',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            showCancelButton: true,
+            showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                    }
+          }).then((result)=>{
+            if(result.isConfirmed){
+              axios.delete(urldeleteNotas + id_nota).then(response =>{
+                this.mostrar(response);
+              });
+              Swal.fire('Eliminado', '','success')
+            }else result.isDenied
+          });
+        },
      
     },
     mounted:function(){
@@ -245,6 +315,7 @@ this.mostrar();
           // *ROLES
        if (localStorage.getItem('token')) {
           this.nombre = localStorage.getItem('nombre');
+          this.rol = localStorage.getItem('rol');
       } else {
           this.$router.push("/");
       }
@@ -255,52 +326,80 @@ this.mostrar();
 
 
 <style>
+.card-border{
+  border: 2px solid #2471A3;
+  margin-bottom: 7rem;
+}
 
-.titulo-verticket{
+.titulo-verticket h1{
     text-transform: uppercase;
     margin-top: 2rem;
     font-weight: bold;
-    color: #34495E;
-    text-align: center;
-
+    font-size: 2.1rem;
+    color: #1A5276;
+    text-align: center
+}
+.boton-regresar{
+  text-decoration: none;
+  color:#2471A3;
+  font-weight: bold;
+}
+.boton-regresar:hover{
+ 
+  color:#AED6F1;
+ transition: all .5s ease-in-out;
 }
 .datos{
    font-size: 1.2rem; 
-   font-weight: 800; 
-   color:#34495E;
+   font-weight: bold; 
+   color: #1A5276;
+   
+   
 }
 .datos span{
    font-size: 1.2rem; 
-   font-weight: 400; 
+   font-weight: bold;
+   color: #2874A6; 
    text-transform: capitalize;
+   
    
 }
 .card-header{
     text-align: left;
-    color:#34495E;
+    color:#ffffff;
     font-weight: bold;
     font-size: 1.2rem;
+    background-color: #2471A3;
 }
 .plus{
-   margin-left: 400px;
+   margin-left: 565px;
+   color: #AED6F1;
+   font-size: 25px;
 }
 .plus:hover{
-  color:tomato;
-  transition: all .5s ease-in-out;
+  cursor: pointer;
+  color:#5DADE2;
+  
+
+  transition: all .4s ease-in-out;
 }
 .top{
     margin-top: 5rem;
 }
-.boton-regresar{
-  text-decoration: none;
-  color: #33a3fb;
-  
 
-}
 .tbody-texto{
   text-transform: lowercase;
 
 }
+.text-area-nota{
+  text-transform: lowercase;
+  background-color: #ffffff;
+  border-radius: 5px;
+  text-align: center;
+  color: #212529;
+  
+}
+
 
 
 

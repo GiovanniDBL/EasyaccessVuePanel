@@ -54,7 +54,7 @@
       <td v-if="rol !== 'usuario'">
           <b-button variant="danger" @click="borrar(ticket.id_reporte)"><i class="fas fa-trash-alt"></i></b-button>
       </td>
-      <td><b-button v-on:click="detalles(ticket.id_reporte)" variant="success"><i class="fas fa-file-import "></i></b-button></td>
+      <td><b-button v-on:click="detalles(ticket.id_reporte)" variant="primary"><i class="fas fa-file-import "></i></b-button></td>
     </tr>
   </tbody>
 </table>
