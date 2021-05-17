@@ -2,14 +2,17 @@
 <div>
  <sidebar></sidebar>
    <navbar></navbar>
-
+<div class="container titulo-verticket">
+  <b-link to="/tickets" class="fas fa-arrow-left fa-2x boton-regresar"></b-link>
+  
+</div>
     <div class="container">
      
         <!-- //**** TITULO ********-->
 
 
 <!-- <h2 class="titulo-verticket animated fadeIn"> <b-link to="/tickets" class="fas fa-arrow-circle-left boton-regresar"></b-link> Detalles del Ticket</h2> -->
-<div class="container">
+<!-- <div class="container">
   <div class="row">
     <div class="col titulo-verticket">
        <h1><b-link to="/tickets" class="far fa-arrow-alt-circle-left boton-regresar"></b-link></h1>
@@ -23,7 +26,8 @@
   
   </div>
 </div>
-<hr>
+<hr> -->
+
 
 
 <b-container class="bv-example-row top animated fadeIn">
@@ -63,6 +67,7 @@
     
 
   </div>
+  
 </div>
     </b-col>
 
@@ -75,7 +80,7 @@
   <div class="card-body">
    
     <!-- <p class="card-text text-muted" v-for="nota in notas" :key="nota.id_nota" >{{nota.nota}}</p> -->
-    <table  class="table  table-striped">
+    <table  class="table table-hover  table-striped">
   <thead>
     <tr>
       <th scope="col">ID</th>
@@ -85,12 +90,12 @@
       <th scope="col" v-if="rol !== 'usuario'">Eliminar</th>
     </tr>
   </thead>
-  <tbody class="tbody-texto">
-    <tr v-for="nota in notas" :key="nota.id_nota">
+  <tbody class="tbody-texto ">
+    <tr v-for="nota in datosPaginados" :key="nota.id_nota">
       <th scope="row">{{nota.id_nota}}</th>
       <td>{{nota.nombre}}</td>
-      <td>
-        <textarea name="" id="" cols="20" class="text-area-nota"  disabled rows="2" v-model="nota.nota"></textarea>
+      <td >
+        <textarea name="" id="" cols="20" class="text-area-nota "  disabled rows="2" v-model="nota.nota"></textarea>
       </td>
       <td>{{fecha(nota.fecha_nota)}}</td>
       <td v-if="rol !== 'usuario'">
@@ -100,13 +105,25 @@
   
   </tbody>
 </table>
-    
+    <!-- //* NAVEGACIÓN DE PAGINACIÓN -->
+
+<nav aria-label="Page navigation example" >
+  <ul class="pagination justify-content-end">
+    <li class="page-item ">
+      <a class="page-link botones-pagination" v-on:click="getPreviousPage()"  tabindex="-1" aria-disabled="true">Anterior</a>
+    </li>
+    <li v-for="pagina in totalPaginas()" :key="pagina" v-on:click="getDataPagina(pagina)" class="page-item" v-bind:class="isActive(pagina)"><a class="page-link" >{{pagina}}</a></li>
+    <li class="page-item">
+      <a class="page-link botones-pagination" v-on:click="getNextPage()" >Siguiente</a>
+    </li>
+  </ul>
+</nav>
   </div>
 </div>
     </b-col>
 
 
-    
+   
 
   </b-row>
 </b-container>
@@ -158,8 +175,10 @@
 
 
     </div>
+    
 
     </div>
+    
 </template>
 
 
@@ -205,6 +224,10 @@ export default {
               id_reporte: '',
               nota:'',  
             },
+            //*PAGINAMIENTO
+            elementosPorPagina: 5,
+             datosPaginados:[],
+             paginaActual: 1,
                  // *ROLES
             nombre: '',
             rol: ''
@@ -213,6 +236,10 @@ export default {
             
        
       }
+    },
+    created(){
+     
+         this.getDataPagina(1);
     },
     methods:{
       // *METODO PARA CAMBIAR EL ESTILO DE LA FECHA EN LA TABLA
@@ -249,7 +276,8 @@ export default {
                     }
 
                     }).then(() => {
-                        this.mostrar();
+                        // this.mostrar();
+                        this.getDataPagina(this.paginaActual)
                         console.log(result);
                                 // this.$router.push('vertickets');
                                 });
@@ -276,13 +304,50 @@ export default {
                     }
           }).then((result)=>{
             if(result.isConfirmed){
-              axios.delete(urldeleteNotas + id_nota).then(response =>{
-                this.mostrar(response);
+              axios.delete(urldeleteNotas + id_nota).then(() =>{
+                this.getDataPagina(this.paginaActual)
+                // this.mostrar(response);
               });
               Swal.fire('Eliminado', '','success')
             }else result.isDenied
           });
         },
+        // *SABER CUANTAS HOJAS DE PAGÍNACIÓN TENDRÉ DE NUMERO ELEMENTOS POR PAGINA
+         totalPaginas(){
+        return Math.ceil(this.notas.length / this.elementosPorPagina)
+      },
+      //* LLAMAR DATOS DE TABLA A CADA PAGINA DE LA PAGINACIÓN
+      getDataPagina(noPagina){
+         axios.get(urlverNotas + this.tickedID).then(response=>{
+           this.notas = response.data;
+              this.paginaActual = noPagina;
+        this.datosPaginados = [];
+        let ini = (noPagina * this.elementosPorPagina) - this.elementosPorPagina;
+        let fin = (noPagina * this.elementosPorPagina);
+        this.datosPaginados = this.notas.slice(ini,fin);
+            });
+    
+      },
+       // * METODO DEL BOTON PARA REGRESAR A LA PAGINA ANTERIOR
+      getPreviousPage(){
+        if (this.paginaActual > 1) {
+          this.paginaActual--;
+        }
+        this.getDataPagina(this.paginaActual);
+      },
+      // * METODO DEL BOTON PARA REGRESAR A LA PAGINA SIGUIENTE
+      getNextPage(){
+        if (this.paginaActual < this.totalPaginas()) {
+          this.paginaActual++;
+        }
+        this.getDataPagina(this.paginaActual);
+      },
+      // *HACER PAGÍNACIÓN ACTIVE
+      isActive(noPagina){
+        //*Active
+        return noPagina == this.paginaActual ? 'active':''
+       
+      },
      
     },
     mounted:function(){
@@ -308,7 +373,8 @@ this.crearnota.nombre = localStorage.getItem('nombre');
         // console.log(this.ticket);
       });
       
-this.mostrar();
+// this.mostrar();
+this.getDataPagina(1);
 
      
 
@@ -326,6 +392,7 @@ this.mostrar();
 
 
 <style>
+
 .card-border{
   border: 2px solid #2471A3;
   margin-bottom: 7rem;
@@ -343,6 +410,8 @@ this.mostrar();
   text-decoration: none;
   color:#2471A3;
   font-weight: bold;
+  float: left;
+  margin-top: 2rem;
 }
 .boton-regresar:hover{
  
@@ -370,9 +439,11 @@ this.mostrar();
     font-weight: bold;
     font-size: 1.2rem;
     background-color: #2471A3;
+    float: center;
 }
 .plus{
-   margin-left: 565px;
+   /* margin-left: 565px; */
+   float: right;
    color: #AED6F1;
    font-size: 25px;
 }

@@ -7,6 +7,9 @@
 
 
    <router-view></router-view>
+
+
+  
   </div>
 </template>
 
@@ -24,8 +27,10 @@ export default {
 </script>
 
 <style>
-body{
+html,body{
   font-family: 'Roboto', sans-serif !important;
+
+  
 }
 .centrar-logo{
   display: block;
@@ -35,8 +40,10 @@ body{
 h1{
   text-align: center;
 }
-::-webkit-scrollbar {
-    display: none;
-}
+/* ::-webkit-scrollbar {
+    display: none  !important;
+} */
+
+
 
 </style>

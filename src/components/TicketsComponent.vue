@@ -4,20 +4,22 @@
    <navbar></navbar>
 
     <div class="container animated fadeIn">
-        <h1 class="titulo-tickets">Tabla de tickets</h1>
+        <!-- <h1 class="titulo-tickets">Tabla de tickets</h1> -->
         
    
 
 <div class="row " >
 
+ 
 
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+      <nav class="navbar navbar-expand-lg top">
   <div class="container-fluid">
   
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ms-auto">
-        <input class="form-control me-2 border-primary" type="search" placeholder="Buscar" aria-label="Search">
-        <button class="btn btn-outline-primary" type="submit"><i class="fas fa-search"></i></button>
+        <input class="form-control me-2 border-dark" type="search" placeholder="Buscar..." aria-label="Search">
+        <button class="btn btn-outline-dark" type="submit"><i class="fas fa-search"></i></button>
        
       </ul>
     
@@ -25,9 +27,11 @@
   </div>
 </nav>
 
-  <table  class="table table-condensed text-center table-striped" >
+
+  <table  class="table table-condensed table-hover text-center table-striped" >
     
    <thead  class="table-dark">
+    
     <tr>
       <th  scope="col">ID</th>
       <th scope="col">Cuenta</th>
@@ -42,7 +46,7 @@
   
     </tr>
   </thead>
-  <tbody >
+  <tbody  >
     <tr v-for="ticket in datosPaginados" :key="ticket.id_reporte">
       <th  class="active">{{ticket.id_reporte}}</th>
       <td>{{ticket.cuenta}}</td>
@@ -153,10 +157,13 @@ export default {
         
               this.tickets=response.data;
               this.paginaActual = noPagina;
+              // this.getDataPagina(this.paginaActual);
         this.datosPaginados = [];
         let ini = (noPagina * this.elementosPorPagina) - this.elementosPorPagina;
         let fin = (noPagina * this.elementosPorPagina);
         this.datosPaginados = this.tickets.slice(ini,fin);
+        
+        
             });
     
       },
@@ -200,8 +207,9 @@ export default {
             showCancelButton: true
           }).then((result)=>{
             if(result.isConfirmed){
-              axios.delete(urldelete + id_reporte).then(response =>{
-                this.mostrar(response);
+              axios.delete(urldelete + id_reporte).then(() =>{
+                this.getDataPagina(this.paginaActual)
+                // this.mostrar(response);
               });
               Swal.fire('Eliminando', '','success')
             }else result.isDenied
@@ -233,6 +241,7 @@ export default {
 /* body{
   background-color: black !important;
 } */
+
 .titulo-tickets{
 text-transform: uppercase;
 margin-top: 2rem;
