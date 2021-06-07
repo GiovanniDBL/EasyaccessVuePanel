@@ -1,19 +1,35 @@
 <template>
-<div>
+<div class="body-tickets">
   <sidebar></sidebar>
    <navbar></navbar>
 
     <div class="container animated fadeIn">
         <!-- <h1 class="titulo-tickets">Tabla de tickets</h1> -->
-        
+      
+
+  <div class="row">
+    <div class="col-8 "></div>
+    <div class="col-4"><nav class="navbar navbar-expand-lg top-nav-buscador ">
+  <div class="container-fluid">
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ms-auto">
+        <input class="form-control me-2 border-dark" type="search" placeholder="Buscar..." aria-label="Search">
+        <button class="btn btn-secondary" type="submit"><i class="fas fa-search"></i></button>
+       
+      </ul>
+    
+    </div>
+  </div>
+</nav></div>
+  </div>
+
    
 
 <div class="row " >
 
- 
-
-
-      <nav class="navbar navbar-expand-lg top">
+<div class="card card-table-tickets-bottom shadow-tabla-tickets">
+      <!-- <nav class="navbar navbar-expand-lg top-nav-buscador ">
   <div class="container-fluid">
   
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -25,12 +41,11 @@
     
     </div>
   </div>
-</nav>
-
-
-  <table  class="table table-condensed table-hover text-center table-striped" >
+</nav> -->
+  <div class="card-body">
+    <table  class="table table-condensed table-hover text-center table-striped" >
     
-   <thead  class="table-dark">
+   <thead  class="">
     
     <tr>
       <th  scope="col">ID</th>
@@ -76,6 +91,10 @@
     </li>
   </ul>
 </nav>
+  </div>
+</div>
+
+
 
 
 
@@ -83,6 +102,7 @@
 </div>
 
     </div>
+     <div class="wave" style="height: 150px; overflow: hidden;" ><svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;"><path d="M0.00,49.98 C149.99,150.00 349.20,-49.98 500.00,49.98 L500.00,150.00 L0.00,150.00 Z" style="stroke: none; fill: #fff;"></path></svg></div>
     </div>
 </template>
 
@@ -238,10 +258,16 @@ export default {
 //*STILOS
 
 <style>
-/* body{
-  background-color: black !important;
-} */
+.body-tickets{
+     background:  linear-gradient(to right, #0576e6d8, #021c79de) !important;
+    background-size: cover !important;
+    background-attachment: fixed !important;
+    background-position: center !important;
+    position: relative !important;
+    height: 100% !important;
 
+    /* width: 100%; */
+}
 .titulo-tickets{
 text-transform: uppercase;
 margin-top: 2rem;
@@ -301,7 +327,18 @@ font-weight: bold;
 
 
 .navigation{
-  margin-bottom: 9rem !important;
+  /* margin-bottom: 9rem !important; */
+}
+.card-table-tickets-bottom{
+  margin-bottom: 20rem;
+  margin-top: 2rem;
+}
+.top-nav-buscador{
+  margin-top: 5rem;
+  
+}
+.shadow-tabla-tickets{
+   box-shadow: 2px 2px 20px 2px rgba(0, 0, 0, 0.555)!important;
 }
 
 </style>

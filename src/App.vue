@@ -27,7 +27,8 @@ export default {
 </script>
 
 <style>
-html,body{
+body{
+  /* overflow: hidden; */
   font-family: 'Roboto', sans-serif !important;
 
   

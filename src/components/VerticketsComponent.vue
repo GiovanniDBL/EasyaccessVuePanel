@@ -1,11 +1,11 @@
 <template >
-<div>
+<div class="body-tickets-detalles">
  <sidebar></sidebar>
    <navbar></navbar>
-<div class="container titulo-verticket">
+<!-- <div class="container titulo-verticket">
   <b-link to="/tickets" class="fas fa-arrow-left fa-2x boton-regresar"></b-link>
   
-</div>
+</div> -->
     <div class="container">
      
         <!-- //**** TITULO ********-->
@@ -34,7 +34,50 @@
   <b-row>
        <!-- //**** CARD CONTENEDOR DE INFORMACIÓN DE TICKET ********-->
     <b-col class="columna-ticket" cols="4">
-    <div class="card card-border" >
+
+
+
+<div class="card  shadow-tabla-tickets card-border">
+  <div class="card-header"><i class="fas fa-info-circle"></i> DATOS DEL TICKET <hr></div>
+  
+  <div class="card-body">
+       <div class="form-group">
+            <label class="datos" >Nombre: <span>{{ticket.nombre}}</span></label>
+      </div>
+      <div class="form-group">
+            <label class="datos">Fecha: <span>{{fecha(ticket.created)}}</span></label>
+      </div>
+      <div class="form-group">
+            <label class="datos">Cuenta: <span>{{ticket.cuenta}}</span></label>
+      </div>
+      <div class="form-group">
+            <label class="datos">Prioridad: <span>{{ticket.prioridad}}</span></label>
+      </div>
+      <div class="form-group">
+            <label class="datos">E-mail: <span>{{ticket.email}}</span></label>
+      </div>
+      <div class="form-group">
+            <label class="datos">Para: <span>{{ticket.departamento}}</span></label>
+      </div>
+      <div class="form-group">
+            <label class="datos">Asunto: <span>{{ticket.asunto}}</span></label>
+      </div>
+      <hr>
+      <div class="form-group">
+          <label class="datos">Mensaje</label>
+  <textarea class="form-control text-area-informacion" disabled placeholder="Mensaje del ticket"  style="height: 150px" v-model="ticket.reporte" ></textarea>
+      </div>
+    
+  </div>
+</div>
+
+
+
+
+
+
+      
+    <!-- <div class="card card-border  shadow-tabla-tickets" >
     <div class="card-header "><i class="fas fa-info-circle"></i> DATOS DEL TICKET</div>
     <div class="card-body">
  
@@ -68,15 +111,15 @@
 
   </div>
   
-</div>
+</div> -->
     </b-col>
 
 
 
    <!-- //**** CARD CONTENEDOR DE NOTAS DE TICKET ********-->
     <b-col class="columna-notas" cols="8">
-        <div class="card text-center card-border " >
-  <div class="card-header"> NOTAS <i class="fas fa-plus-circle plus " v-if="rol !== 'usuario'" data-bs-toggle="modal" data-bs-target="#exampleModalVer"></i></div>
+        <div class="card text-center  shadow-tabla-tickets" >
+  <div class="card-header"> NOTAS <i class="fas fa-plus-circle plus " v-if="rol !== 'usuario'" data-bs-toggle="modal" data-bs-target="#exampleModalVer"></i>  </div>
   <div class="card-body">
    
     <!-- <p class="card-text text-muted" v-for="nota in notas" :key="nota.id_nota" >{{nota.nota}}</p> -->
@@ -176,7 +219,7 @@
 
     </div>
     
-
+ <div class="wave" style="height: 150px; overflow: hidden;" ><svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;"><path d="M0.00,49.98 C149.99,150.00 349.20,-49.98 500.00,49.98 L500.00,150.00 L0.00,150.00 Z" style="stroke: none; fill: #fff;"></path></svg></div>
     </div>
     
 </template>
@@ -392,20 +435,33 @@ this.getDataPagina(1);
 
 
 <style>
-
+.body-tickets-detalles{
+  background:  linear-gradient(to right, #0576e6d8, #021c79de) !important;
+    background-size:  cover !important;
+    background-attachment: fixed !important;
+    background-position: center !important;
+    position: relative !important;
+    height: 100% ;
+    
+}
 .card-border{
-  border: 2px solid #2471A3;
-  margin-bottom: 7rem;
+
+  margin-bottom: 18rem;
+}
+@media(min-width:1800px){
+.body-tickets-detalles{
+
+    height: 100vh ;
+    
+}
+.card-border{
+
+  margin-bottom: 10rem;
+}
 }
 
-.titulo-verticket h1{
-    text-transform: uppercase;
-    margin-top: 2rem;
-    font-weight: bold;
-    font-size: 2.1rem;
-    color: #1A5276;
-    text-align: center
-}
+
+
 .boton-regresar{
   text-decoration: none;
   color:#2471A3;
@@ -420,31 +476,35 @@ this.getDataPagina(1);
 }
 .datos{
    font-size: 1.2rem; 
-   font-weight: bold; 
-   color: #1A5276;
+   font-weight: 500; 
+   color: #000000;
+   padding: 1px;
    
    
 }
+
 .datos span{
    font-size: 1.2rem; 
-   font-weight: bold;
-   color: #2874A6; 
-   text-transform: capitalize;
+   font-weight: 400;
+   text-transform:capitalize;
    
    
 }
+
 .card-header{
     text-align: left;
-    color:#ffffff;
+    color:#000000;
     font-weight: bold;
     font-size: 1.2rem;
-    background-color: #2471A3;
-    float: center;
+    background-color: #ffffff;
+    float: right !important;
+    border: 0 !important;
+   
 }
 .plus{
    /* margin-left: 565px; */
    float: right;
-   color: #AED6F1;
+   color: #000;
    font-size: 25px;
 }
 .plus:hover{
@@ -469,6 +529,12 @@ this.getDataPagina(1);
   text-align: center;
   color: #212529;
   
+}
+.text-area-informacion{
+  background-color: #ffffff !important;
+  border: 0;
+  font-size: 1.2rem;
+
 }
 
 

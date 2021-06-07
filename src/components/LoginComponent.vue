@@ -1,13 +1,13 @@
 <template>
-    <div >
+    <div  class="body-login">
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
       <div class="container-fluid">
     <a class="navbar-brand titulo-Navv"  ><span>Panel de control </span>easy<span>access</span></a>
     </div>
 </nav>
 <form v-on:submit.prevent="login">
- <div class="animated fadeIn top ">
-    <div class="modal-dialog shadow">
+ <div class="animated fadeIn top " >
+    <div class="modal-dialog modal-dialog-centered shadow">
         <div class="modal-content">
         <div class="modal-header ">
         <div class="form-title text-center">
@@ -38,12 +38,12 @@
     </div> 
 </form>
      
-      
+      <!-- class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" -->
    
 
 
 
-
+<div class="wave" style="height: 150px; overflow: hidden;" ><svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;"><path d="M0.00,49.98 C149.99,150.00 349.20,-49.98 500.00,49.98 L500.00,150.00 L0.00,150.00 Z" style="stroke: none; fill: #fff;"></path></svg></div>
    
 </div>
 
@@ -130,10 +130,21 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
+
+.body-login{
+    background:  linear-gradient(to right, #0576e6d8, #021c79de) !important;
+    background-size: cover !important;
+    background-attachment: fixed !important;
+    background-position: center !important;
+    position: relative !important;
+    height: 100vh !important;
+    width: 100%;
+}
 
 .shadow{
     box-shadow: 2px 2px 20px 1px rgba(0, 0, 0, 0.555)!important;
+   
 }
 @media(min-width: 768px) {
   .titulo-Navv{
@@ -168,6 +179,11 @@ export default {
   width: 50px;
   border-radius: 50%;
 
+}
+.wave{
+    position: absolute;
+    width: 100%;
+    bottom: 0;
 }
 </style>>
 
