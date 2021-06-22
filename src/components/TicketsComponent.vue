@@ -49,9 +49,9 @@
     
     <tr>
       <th  scope="col">ID</th>
-      <th scope="col">Cuenta</th>
+      <!-- <th scope="col">Multimedia</th> -->
       <th scope="col">Nombre</th>
-      <th scope="col">Departamento</th>
+      <th scope="col">Destinatario</th>
       <th scope="col">Prioridad</th>
       <th scope="col">Asunto</th>
       <th scope="col">Fecha</th>
@@ -63,17 +63,17 @@
   </thead>
   <tbody  >
     <tr v-for="ticket in datosPaginados" :key="ticket.id_reporte">
-      <th  class="active">{{ticket.id_reporte}}</th>
-      <td>{{ticket.cuenta}}</td>
+      <th  class="active">{{ticket.id_ticket}}</th>
+      <!-- <td>{{ticket.multimedia}}</td> -->
       <td>{{ticket.nombre}}</td>
       <td>{{ticket.departamento}}</td>
       <td>{{ticket.prioridad}}</td>
       <td> {{ticket.asunto}}</td>
       <td>{{fecha(ticket.created)}}</td>
       <td v-if="rol !== 'usuario'">
-          <b-button variant="danger" @click="borrar(ticket.id_reporte)"><i class="fas fa-trash-alt"></i></b-button>
+          <b-button variant="danger" @click="borrar(ticket.id_ticket)"><i class="fas fa-trash-alt"></i></b-button>
       </td>
-      <td><b-button v-on:click="detalles(ticket.id_reporte)" variant="primary"><i class="fas fa-file-import "></i></b-button></td>
+      <td><b-button v-on:click="detalles(ticket.id_ticket)" variant="primary"><i class="fas fa-file-import "></i></b-button></td>
     </tr>
   </tbody>
 </table>
@@ -220,14 +220,14 @@ export default {
             });
         },
         // *BORRAR TICKETS DEL PANEL
-        borrar(id_reporte){
+        borrar(id_ticket){
           Swal.fire({
             title: 'Eliminar Ticket?',
             confirmButtonText: 'Confirmar',
             showCancelButton: true
           }).then((result)=>{
             if(result.isConfirmed){
-              axios.delete(urldelete + id_reporte).then(() =>{
+              axios.delete(urldelete + id_ticket).then(() =>{
                 this.getDataPagina(this.paginaActual)
                 // this.mostrar(response);
               });

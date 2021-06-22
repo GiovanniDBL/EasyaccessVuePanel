@@ -1,7 +1,7 @@
 <template>
     <div>
 
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
+  <nav class="navbar  navbar-expand-lg navbar-dark bg-dark ">
   <div class="container-fluid">
     <b-navbar-brand href="#"><b-button variant="dark" v-b-toggle.sidebar-menu ><b-icon icon="list"></b-icon></b-button></b-navbar-brand>
     <a class="navbar-brand titulo-Nav"  href="#"><span>Panel de control </span>easy<span>access</span></a>

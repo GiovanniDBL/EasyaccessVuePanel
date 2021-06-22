@@ -27,7 +27,7 @@
             </form>
         </div>
         <div class="modal-footer d-flex justify-content-center">
-            <button type="submit" class="btn btn-block  btn-color  btn-round">INGRESAR</button>
+            <button type="submit" class="btn btn-block btn-color btn-round">INGRESAR</button>
         </div>
 
         <!-- <div class="alert alert-danger" role="alert" v-if="error">

@@ -30,7 +30,12 @@
 
 
 
+ 
+
+
 <b-container class="bv-example-row top animated fadeIn">
+  <p class=""><b-link to="/tickets" class="notas-regresar"> <i class="fas fa-angle-left"></i> Regresar </b-link></p>
+
   <b-row>
        <!-- //**** CARD CONTENEDOR DE INFORMACIÓN DE TICKET ********-->
     <b-col class="columna-ticket" cols="4">
@@ -47,18 +52,18 @@
       <div class="form-group">
             <label class="datos">Fecha: <span>{{fecha(ticket.created)}}</span></label>
       </div>
-      <div class="form-group">
+      <!-- <div class="form-group">
             <label class="datos">Cuenta: <span>{{ticket.cuenta}}</span></label>
-      </div>
+      </div> -->
       <div class="form-group">
             <label class="datos">Prioridad: <span>{{ticket.prioridad}}</span></label>
       </div>
       <div class="form-group">
             <label class="datos">E-mail: <span>{{ticket.email}}</span></label>
       </div>
-      <div class="form-group">
+      <!-- <div class="form-group">
             <label class="datos">Para: <span>{{ticket.departamento}}</span></label>
-      </div>
+      </div> -->
       <div class="form-group">
             <label class="datos">Asunto: <span>{{ticket.asunto}}</span></label>
       </div>
@@ -185,19 +190,28 @@
       </div>
       <div class="modal-body">
         <form @submit="crear()" method="POST">
+
+      
        
-          <div class="mb-3">
-    
-            <label for="id" class="col-form-label">ID Reporte</label>
-            <input type="text" class="form-control" id="id" name="id_reporte" disabled v-model="crearnota.id_reporte" >
-          </div>
-          <div class="mb-3">
-            <label for="recipient-name" class="col-form-label">De:</label>
-            <input type="text" class="form-control" id="recipient-name" name="nombre" disabled  v-model="crearnota.nombre" >
-          </div>
-          <div class="mb-3">
+          
+          <!-- <div class="mb-3">
             <label for="message-text" class="col-form-label">Mensaje:</label>
             <textarea class="form-control" name="nota" id="message-text" v-model="crearnota.nota"></textarea>
+          </div> -->
+
+          <div class="form-floating">
+  <textarea class="form-control" name="nota"   v-model="crearnota.nota" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+  <label for="floatingTextarea2" class="text-muted">Escriba la nota para éste ticket ...</label>
+</div>
+
+          <div class=" invisible">
+    
+            <!-- <label for="id" class="col-form-label">ID Reporte</label> -->
+            <input type="text" class="form-control" id="id" name="id_reporte" disabled v-model="crearnota.id_reporte" >
+          </div>
+          <div class=" invisible">
+            <!-- <label for="recipient-name" class="col-form-label">De:</label> -->
+            <input type="text" class="form-control" id="recipient-name" name="nombre" disabled  v-model="crearnota.nombre" >
           </div>
         
         </form>
@@ -322,6 +336,7 @@ export default {
                         // this.mostrar();
                         this.getDataPagina(this.paginaActual)
                         console.log(result);
+                        
                                 // this.$router.push('vertickets');
                                 });
       
@@ -535,6 +550,19 @@ this.getDataPagina(1);
   border: 0;
   font-size: 1.2rem;
 
+}
+.notas-regresar{
+  text-decoration: none;
+  color: #ffffff;
+  text-transform: uppercase;
+  
+ 
+}
+.notas-regresar:hover{
+
+  color: #ffffff9d;
+ 
+ 
 }
 
 
