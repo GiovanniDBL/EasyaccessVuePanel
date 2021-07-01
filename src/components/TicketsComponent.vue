@@ -14,10 +14,15 @@
   
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ms-auto">
-        <input class="form-control me-2 border-dark" type="search" placeholder="Buscar..." aria-label="Search">
+        <input class="form-control me-2 border-dark" type="search" v-model="search" placeholder="Asunto" aria-label="Search">
         <button class="btn btn-secondary" type="submit"><i class="fas fa-search"></i></button>
        
       </ul>
+     
+ <!-- <input type="text" v-model="search" placeholder="prueba"> -->
+    
+       
+   
     
     </div>
   </div>
@@ -138,7 +143,7 @@ export default {
     data(){
         return{
 
-          search: '',
+          search: "",
          elementosPorPagina: 10,
              datosPaginados:[],
              paginaActual: 1,
@@ -152,7 +157,11 @@ export default {
             
         }
     },
-  
+  computed:{
+    filteredPosts() {
+      return this.tickets.filter(tickets => tickets.prioridad.toLowerCase().includes(this.search.toLowerCase()))
+    }
+  },
     created(){
       this.mostrar();
       this.getDataPagina(1);
@@ -176,8 +185,8 @@ export default {
          axios.get(url).then(response=>{
         
               this.tickets=response.data;
-              this.paginaActual = noPagina;
-              // this.getDataPagina(this.paginaActual);
+              // this.paginaActual = noPagina;
+              this.getDataPagina(this.paginaActual);
         this.datosPaginados = [];
         let ini = (noPagina * this.elementosPorPagina) - this.elementosPorPagina;
         let fin = (noPagina * this.elementosPorPagina);
